@@ -14,7 +14,7 @@ read -p "Enter your public/private key filename: " filename
 echo "✅ 이 후 콘솔의 추가 질문에 모두 enter를 입력해주세요"
 
 echo $filename | ssh-keygen -t rsa -C "$email"
-echo "https://github.com/settings/keys 접속 후 Github 계정에 아래의 ssh 공개 키를 등록해주세요"
+echo "https://github.com/settings/keys 접속, 로그인 후 Github 계정에 아래의 ssh 공개 키를 등록해주세요"
 
 cat ./$filename.pub
 
@@ -41,23 +41,21 @@ ssh-add ~/.ssh/$filename
 
 cd -
 
-echo "🚌가져올 레포의 SSH 링크를 입력해주세요"
+echo "🚌 가져올 레포의 SSH 링크를 입력해주세요"
 
 while true; do
     read input
     if [ "$input" == "Done" ]; then
-        echo "다시 한 번 입력해주세요?"
+        echo "다시 한 번 입력해주세요"
             echo "알겠습니다 :)"
             break
-
     else
         echo $input Clonning...
         git clone $input
 
-        echo "🚌가져올 레포의 SSH 링크를 입력해주세요"
+        echo "🚌 가져올 레포의 SSH 링크를 입력해주세요"
         echo "모두다 입력 했다면 Done을 입력해 주세요"
     fi
-
 done
 
 
