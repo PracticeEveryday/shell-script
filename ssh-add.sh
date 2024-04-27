@@ -54,7 +54,7 @@ while true; do
         git clone $input
 
         echo "🚌 가져올 레포의 SSH 링크를 입력해주세요"
-        echo "모두다 입력 했다면 Done을 입력해 주세요"
+        echo "모두다 입력 했다면 finish을 입력해 주세요"
     fi
 done
 
