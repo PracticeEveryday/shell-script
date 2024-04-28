@@ -9,15 +9,14 @@ fi
 cd ~/.ssh
 
 # github email 기준 pub key 생성
-read -p "Enter your GitHub email address: " email
-read -p "Enter your public/private key filename: " filename
+read -p "깃허브 계정 이메일을 입력해주세요: " email
+read -p "public/private key filename을 입력해주세요: " filename
 
-echo "$filename 앞에 prefix로 id_rsa_가 붙습니다."
-
+echo "public/private key는 .ssh/id_rsa_$filename 폴더 안에 저장됩니다."
 prefix_filename="id_rsa_$filename"
+mkdir -p ~/.ssh/$prefix_filename
 
 echo "✅ 이 후 콘솔의 추가 질문에 모두 enter를 입력해주세요"
-
 echo $filename | ssh-keygen -t rsa -C "$email"
 echo "✅ https://github.com/settings/keys 접속, 로그인 후 Github 계정에 아래의 ssh 공개 키를 등록해주세요"
 
@@ -40,15 +39,13 @@ while true; do
     fi
 done
 
-echo "✅ ssh-add 비밀키 등록 cli 실행"
+echo "✅ ssh-add agent에 비밀키 등록"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/$filename
 
 
 # git ssh config file 생성
 config_file=~/.ssh/config
-
-mkdir -p ~/.ssh/$prefix_filename
 
 # ~/.ssh/config 파일이 없으면 생성합니다.
 if [ ! -f "$config_file" ]; then
@@ -58,6 +55,7 @@ else
     echo "✅ $config_file 이미 존재하므로 스크립트를 계속 실행해주세요"
 fi
 
+# prefix_filename 폴더에 public/private key 이동
 mv $filename ./$prefix_filename
 mv $filename.pub ./$prefix_filename
 
@@ -65,6 +63,7 @@ mv $filename.pub ./$prefix_filename
 echo -e "\nHost github.com-$filename\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/$prefix_filename/$filename" >> $config_file
 echo "✅ $config_file 내 새로 입력한 github.com-$filename 호스트 정보가 추가되었습니다."
 
+# script를 실행한 경로로 이동
 cd -
 
 echo "🚌 가져올 레포의 SSH 링크를 입력해주세요"
