@@ -89,5 +89,5 @@ done
 
 
 echo "🎉 생성된 폴더와 파일 목록"
-ls -al ~/.ssh/prefix_filename
-cat $config_file
+ls -al ~/.ssh/$prefix_filename
+cat $config_file | grep tail -n 5
