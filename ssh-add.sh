@@ -63,7 +63,7 @@ mv $filename.pub ./$prefix_filename
 
 # config 파일에 Host 정보를 추가합니다.
 echo -e "\nHost github.com-$filename\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/$prefix_filename/$filename" >> $config_file
-echo "Host configuration added for github.com-$filename in $config_file"
+echo "✅ $config_file 내 새로 입력한 github.com-$filename 호스트 정보가 추가되었습니다."
 
 cd -
 
@@ -72,7 +72,7 @@ echo "🚌 가져올 레포의 SSH 링크를 입력해주세요"
 while true; do
     read input
     if [ "$input" == "finish" ]; then
-        echo "모든 입력을 완료했습니다. 프로그램을 종료합니다."
+        echo "🔚 모든 입력을 완료했습니다. 프로그램을 종료합니다."
         break
     else
         # SSH 형식인지 확인하고 파일 이름을 추출합니다.
@@ -86,3 +86,8 @@ while true; do
         fi
     fi
 done
+
+
+echo "🎉 생성된 폴더와 파일 목록"
+ls -al ~/.ssh/prefix_filename
+cat $config_file
