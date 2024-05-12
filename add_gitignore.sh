@@ -15,10 +15,10 @@ do
             if [ -f "$item" ]; then
                 echo "$item" >> .gitignore
             elif [ -d "$item" ]; then
-                echo "$item/" >> .gitignore
+                echo "$item" >> .gitignore
             fi
         else
-            echo "$item does not exist."
+            echo "$item 파일 또는 폴더는 존재하지 않습니다."
         fi
     fi
 done
@@ -28,7 +28,4 @@ done
 git add .gitignore
 
 # 입력 받은 파일을 추적에서 제외
-git rm --cached $(cat .gitignore)
-
-# 변경사항을 커밋
-git commit -m "Added files to .gitignore and untracked them"
+git rm --cached -r $(cat .gitignore)
